@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\City;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Interface CitiesRepositoryInterface
@@ -15,6 +16,11 @@ interface CitiesRepositoryInterface
      * @return City|null
      */
     public function findByName(string $name): ?City;
+
+    /**
+     * @return Collection
+     */
+    public function all(): Collection;
 
     /**
      * @param City $city

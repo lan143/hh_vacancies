@@ -57,7 +57,7 @@ class HHService implements HHServiceInterface
     {
         for ($id = self::START_VACANCY; $id <= (self::START_VACANCY + self::MAX_VACANCIES); $id++) {
             try {
-                $command->info('Start update vacancy ' . $id);
+                $command->info('Update vacancy ' . $id);
                 $this->updateVacancy($id);
             } catch (HHServiceException $e) {
                 $command->error($e->getMessage());
@@ -99,12 +99,11 @@ class HHService implements HHServiceInterface
         try {
             $response = $this->client->request('GET', (string) $id);
 
-            $document = new Document();
-            $document->loadHtml($response->getBody()->getContents());
+            $document = new Document($response->getBody()->getContents());
 
             $title = null;
             if ($document->has('h1.header')) {
-                $title = $document->find('h1.header')[0]->text();
+                $title = $document->find('h1.header')[0]->innerHtml();
             }
 
             $description = null;

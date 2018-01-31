@@ -61,6 +61,11 @@ $app->bind(
     \App\Console\Services\CityService::class
 );
 
+$app->bind(
+    \App\Http\Services\SearchServiceInterface::class,
+    \App\Http\Services\SearchService::class
+);
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application
