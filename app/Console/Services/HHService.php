@@ -55,13 +55,19 @@ class HHService implements HHServiceInterface
      */
     public function update(Command $command): void
     {
-        for ($id = self::START_VACANCY; $id <= (self::START_VACANCY + self::MAX_VACANCIES); $id++) {
+        $count = 0;
+        $id = self::START_VACANCY;
+
+        while ($count < self::MAX_VACANCIES) {
             try {
                 $command->info('Update vacancy ' . $id);
                 $this->updateVacancy($id);
+                $count++;
             } catch (HHServiceException $e) {
                 $command->error($e->getMessage());
             }
+
+            $id++;
         }
     }
 

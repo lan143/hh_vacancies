@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Vacancy;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class VacanciesARRepository
@@ -35,7 +34,7 @@ class VacanciesARRepository implements VacanciesRepositoryInterface
      * @param int $cityId
      * @return array
      */
-    public function searchByContentAndCity(string $searchQuery, int $cityId): array
+    public function searchByContentAndCity(?string $searchQuery, int $cityId): array
     {
         $query = (new Vacancy)->whereRaw('1 = 1');
 
@@ -43,14 +42,16 @@ class VacanciesARRepository implements VacanciesRepositoryInterface
             $query->where('city_id', '=', $cityId);
         }
 
-        $words = explode(' ', $searchQuery);
+        if ($searchQuery !== null) {
+            $words = explode(' ', $searchQuery);
 
-        $query->where(function(Builder $query) use($words) {
-            foreach ($words as $word) {
-                $query->orWhere('title', 'LIKE', '%' . $word . '%');
-                $query->orWhere('description', 'LIKE', '%' . $word . '%');
-            }
-        });
+            $query->where(function(Builder $query) use($words) {
+                foreach ($words as $word) {
+                    $query->orWhere('title', 'LIKE', '%' . $word . '%');
+                    $query->orWhere('description', 'LIKE', '%' . $word . '%');
+                }
+            });
+        }
 
         $paginator = $query->paginate(20);
 

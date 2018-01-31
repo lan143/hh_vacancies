@@ -28,5 +28,5 @@ interface VacanciesRepositoryInterface
      * @param int $cityId
      * @return array
      */
-    public function searchByContentAndCity(string $searchQuery, int $cityId): array;
+    public function searchByContentAndCity(?string $searchQuery, int $cityId): array;
 }

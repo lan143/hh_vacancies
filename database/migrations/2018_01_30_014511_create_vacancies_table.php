@@ -20,6 +20,7 @@ class CreateVacanciesTable extends Migration
             $table->text('description');
             $table->integer('city_id');
             $table->timestamps();
+            $table->index('city_id');
         });
     }
 

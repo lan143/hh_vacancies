@@ -72,6 +72,12 @@
             margin: 30px;
         }
 
+        div.vacancies div.vacancy {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
         .archive-flag {
             font-size: 0.5em;
             margin-left: 15px;

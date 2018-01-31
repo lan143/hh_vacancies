@@ -18,6 +18,11 @@ class CityService implements CityServiceInterface
     private $cache = [];
 
     /**
+     * @var bool
+     */
+    private $cacheInited = false;
+
+    /**
      * CityService constructor.
      * @param CitiesRepositoryInterface $citiesRepository
      */
@@ -32,18 +37,29 @@ class CityService implements CityServiceInterface
      */
     public function getCityByName(string $name): City
     {
+        if (!$this->cacheInited) {
+            $this->initCache();
+        }
+
         if (array_key_exists($name, $this->cache)) {
             $city = $this->cache[$name];
         } else {
-            $city = $this->citiesRepository->findByName($name);
+            $city = new City();
+            $city->name = $name;
+            $this->citiesRepository->save($city);
 
-            if ($city === null) {
-                $city = new City();
-                $city->name = $name;
-                $this->citiesRepository->save($city);
-            }
+            $this->cache[$name] = $city;
         }
 
         return $city;
+    }
+
+    protected function initCache(): void
+    {
+        $cities = $this->citiesRepository->all();
+
+        foreach ($cities as $city) {
+            $this->cache[$city->name] = $city;
+        }
     }
 }

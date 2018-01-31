@@ -20,6 +20,8 @@
 
             {!! $formBuilder->select('city', $cities) !!}
 
+            {!! $formBuilder->submit('Искать') !!}
+
             {!! $formBuilder->close() !!}
         </div>
     </div>
@@ -31,7 +33,7 @@
             <div class="vacancy">
                 <h2>{!! $vacancy->title !!}</h2>
                 <span class="city">{{ $vacancy->city->name }}</span>
-                <div class="description">{{ $vacancy->description }}</div>
+                <div class="description">{!! nl2br(e($vacancy->description)) !!}</div>
             </div>
         @endforeach
 

@@ -63,7 +63,7 @@ class SearchRequest extends FormRequest
         }
 
         return [
-            'query' => 'required|max:255',
+            'query' => 'max:500',
             'city' => 'required|in:' . implode(',', $cityIds),
         ];
     }
